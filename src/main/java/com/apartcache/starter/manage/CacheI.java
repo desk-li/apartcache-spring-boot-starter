@@ -1,5 +1,9 @@
 package com.apartcache.starter.manage;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by desk
  *
@@ -16,4 +20,6 @@ public interface CacheI {
     String getCacheName(String method);
 
     String[] getAll();
+
+
 }

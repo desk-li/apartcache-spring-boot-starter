@@ -19,17 +19,26 @@ public class RedisCacheManager {
 
     CacheNameGenerator cacheNameGenerator;
 
-    public Object searchCache(Method method, Object[] args){
+    public Object readCache(Method method, Object[] args){
         if(cacheServiceManager.contains(method)){
-            return doSearch(method, args);
+            System.out.println(method.getName()+": 读取缓存的数据");
+            return doRead(method, args);
         }
         return null;
     }
 
 
-    private Object doSearch(Method method, Object[] args){
-        return "我已经说了 hello world !";
-//        return redisClient.get(cacheNameGenerator.generateKey(method, args));
+    public void writeCache(Method method, Object[] args, Object object){
+        if(cacheServiceManager.contains(method)) {
+            System.out.println(method.getName() + ": 向缓存写入数据");
+            redisClient.set(cacheNameGenerator.generateKey(method, args), object);
+        }
+    }
+
+
+    private Object doRead(Method method, Object[] args){
+//        return "我已经说了 hello world !";
+        return redisClient.get(cacheNameGenerator.generateKey(method, args));
     }
 
 

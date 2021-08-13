@@ -40,7 +40,7 @@ public class CacheAspect {
         try {
             method = target.getClass().getMethod(methodName, parameterTypes);
 
-            Object o = redisCacheManager.searchCache(method, args);
+            Object o = redisCacheManager.readCache(method, args);
 
             if(Optional.ofNullable(o).isPresent()){
                 return o;

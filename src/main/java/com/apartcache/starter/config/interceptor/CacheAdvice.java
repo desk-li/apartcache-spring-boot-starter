@@ -20,11 +20,14 @@ public class CacheAdvice implements MethodInterceptor {
     public Object invoke(MethodInvocation methodInvocation) throws Throwable {
         Method method = methodInvocation.getMethod();
         Object[] args = methodInvocation.getArguments();
-        Object o = redisCacheManager.searchCache(method, args);
+        Object o = redisCacheManager.readCache(method, args);
         if(Optional.ofNullable(o).isPresent()){
             return o;
         }
         Object result = methodInvocation.proceed();
+        if(Optional.ofNullable(result).isPresent()){
+            redisCacheManager.writeCache(method, args, result);
+        }
         return result;
     }
 

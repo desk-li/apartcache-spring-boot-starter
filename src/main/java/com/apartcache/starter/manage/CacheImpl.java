@@ -1,8 +1,10 @@
 package com.apartcache.starter.manage;
 
 import com.apartcache.starter.config.CacheServiceManager;
+import com.apartcache.starter.util.ClassUtils;
 
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 /**
  * Created by desk
@@ -14,29 +16,17 @@ public class CacheImpl implements CacheI {
 
     @Override
     public void add(String method) {
-        String substring = method.substring(0, method.indexOf("("));
-        String substring1 = substring.substring(0, substring.lastIndexOf("."));
-        String substring2 = substring.substring(substring.lastIndexOf(".") + 1);
-        try {
-            Class<?> aClass = Class.forName(substring1);
-            Method method1 = aClass.getMethod(substring2);
+        Method method1 = ClassUtils.toMethod(method);
+        if(Optional.ofNullable(method1).isPresent()){
             cacheServiceManager.add(method1);
-        } catch (ClassNotFoundException | NoSuchMethodException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
     public void remove(String method) {
-        String substring = method.substring(0, method.indexOf("("));
-        String substring1 = substring.substring(0, substring.lastIndexOf("."));
-        String substring2 = substring.substring(substring.lastIndexOf(".") + 1);
-        try {
-            Class<?> aClass = Class.forName(substring1);
-            Method method1 = aClass.getMethod(substring2);
+        Method method1 = ClassUtils.toMethod(method);
+        if(Optional.ofNullable(method1).isPresent()){
             cacheServiceManager.remove(method1);
-        } catch (ClassNotFoundException | NoSuchMethodException e) {
-            e.printStackTrace();
         }
     }
 
@@ -47,17 +37,11 @@ public class CacheImpl implements CacheI {
 
     @Override
     public String getCacheName(String method) {
-        String substring = method.substring(0, method.indexOf("("));
-        String substring1 = substring.substring(0, substring.lastIndexOf("."));
-        String substring2 = substring.substring(substring.lastIndexOf(".") + 1);
-        try {
-            Class<?> aClass = Class.forName(substring1);
-            Method method1 = aClass.getMethod(substring2);
+        Method method1 = ClassUtils.toMethod(method);
+        if(Optional.ofNullable(method1).isPresent()){
             return cacheServiceManager.getCacheName(method1);
-        } catch (ClassNotFoundException | NoSuchMethodException e) {
-            e.printStackTrace();
         }
-        return null;
+        return "unknown method: "+method;
     }
 
     @Override
