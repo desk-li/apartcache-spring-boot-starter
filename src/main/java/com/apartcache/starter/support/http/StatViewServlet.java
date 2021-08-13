@@ -1,5 +1,6 @@
 package com.apartcache.starter.support.http;
 
+import com.alibaba.fastjson.JSONObject;
 import com.apartcache.starter.manage.CacheI;
 
 import javax.servlet.ServletException;
@@ -79,7 +80,7 @@ public class StatViewServlet extends HttpServlet {
         Integer size = cacheI.size();
         setResponse(resp);
         Writer out = resp.getWriter();
-        out.write(size);
+        out.write(size.toString());
         out.flush();
         out.close();
     }
@@ -98,7 +99,7 @@ public class StatViewServlet extends HttpServlet {
         String[] all = cacheI.getAll();
         setResponse(resp);
         Writer out = resp.getWriter();
-        out.write(all.toString());
+        out.write(JSONObject.toJSONString(all));
         out.flush();
         out.close();
     }

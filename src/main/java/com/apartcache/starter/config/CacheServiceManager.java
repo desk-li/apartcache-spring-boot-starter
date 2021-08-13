@@ -23,7 +23,7 @@ public class CacheServiceManager {
 
     public void add(Method method) {
         Class<?> declaringClass = method.getDeclaringClass();
-        CacheBean cacheBean = cacheBeanMap.get(declaringClass);
+        CacheBean cacheBean = cacheBeanMap.get(declaringClass.getName());
         CacheBean cacheBean1 = Optional.ofNullable(cacheBean).orElseGet(() -> new CacheBean());
         cacheBean1.setClaz(declaringClass);
         cacheBean1.getMethodSet().add(method);
@@ -32,7 +32,7 @@ public class CacheServiceManager {
 
     public void remove(Method method) {
         Class<?> declaringClass = method.getDeclaringClass();
-        CacheBean cacheBean = cacheBeanMap.get(declaringClass);
+        CacheBean cacheBean = cacheBeanMap.get(declaringClass.getName());
         CacheBean cacheBean1 = Optional.ofNullable(cacheBean).orElseGet(() -> new CacheBean());
         cacheBean1.getMethodSet().remove(method);
         cacheBeanMap.put(declaringClass.getName(), cacheBean1);
@@ -52,7 +52,7 @@ public class CacheServiceManager {
         collect.forEach(temp ->{
             set.addAll(temp);
         });
-        return set.toArray(new String[set.size()]);
+        return set.stream().map(Method::toString).collect(Collectors.toList()).toArray(new String[set.size()]);
     }
 
 
@@ -69,7 +69,10 @@ public class CacheServiceManager {
                         if(Optional.ofNullable(method1).isPresent()){
                             b =  cacheBean.getMethodSet().stream().anyMatch(m->{
                                 return ObjectUtils.nullSafeEquals(m.getName(), method.getName())
-                                        && ObjectUtils.nullSafeEquals(m.getParameterTypes(), method.getParameterTypes());
+                                        && ObjectUtils.nullSafeEquals(
+                                                Arrays.asList(m.getParameterTypes()).stream().map(Class::getName).collect(Collectors.toList()),
+                                        Arrays.asList(method.getParameterTypes()).stream().map(Class::getName).collect(Collectors.toList())
+                                );
                             });
                         }
                     } catch (NoSuchMethodException e) {

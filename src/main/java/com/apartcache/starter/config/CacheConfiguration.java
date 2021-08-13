@@ -37,7 +37,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class CacheConfiguration {
 
     @Autowired
-    RedisTemplate redisTemplate;
+    RedisConnectionFactory factory;
     @Autowired
     ApartCache apartCache;
 
@@ -67,7 +67,6 @@ public class CacheConfiguration {
 
     @Bean
     public AspectJExpressionPointcutAdvisor configurabledvisor() {
-        System.out.println(apartCache.getCacheExpression());
         AspectJExpressionPointcutAdvisor advisor = new AspectJExpressionPointcutAdvisor();
         advisor.setExpression(apartCache.getCacheExpression());
         advisor.setAdvice(cacheAdvice());
@@ -76,7 +75,9 @@ public class CacheConfiguration {
 
     @Bean
     public CacheAdvice cacheAdvice(){
-        return new CacheAdvice(redisCacheManager());
+        CacheAdvice cacheAdvice = new CacheAdvice(redisCacheManager());
+        System.out.println(cacheAdvice.getClass().getClassLoader().getClass().getName());
+        return cacheAdvice;
     }
 
     @Bean
@@ -86,7 +87,7 @@ public class CacheConfiguration {
 
     @Bean
     public RedisClient redisClient(){
-        return new RedisClient(redisTemplate);
+        return new RedisClient(redisTemplate(factory));
     }
 
     @Bean

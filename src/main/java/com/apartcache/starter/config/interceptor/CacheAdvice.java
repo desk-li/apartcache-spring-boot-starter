@@ -1,6 +1,7 @@
 package com.apartcache.starter.config.interceptor;
 
 import com.apartcache.starter.config.redis.RedisCacheManager;
+import com.apartcache.starter.util.ClassUtils;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 

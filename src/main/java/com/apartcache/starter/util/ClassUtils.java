@@ -1,6 +1,7 @@
 package com.apartcache.starter.util;
 
 import com.apartcache.starter.bean.ParamBean;
+import org.apache.commons.lang3.ClassLoaderUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Method;
@@ -21,6 +22,7 @@ public class ClassUtils {
     public static final String rex = "\\(.*\\)";
     public static final String rep = "\\<[^>]*[^<]*\\>";
     public static final Pattern compile = Pattern.compile(rex);
+    public static final ClassLoader loader = ClassLoader.getSystemClassLoader();
 
     public static void main(String[] args) {
         String ss = "com.apartcache.starter.manage.CacheI#add(java.lang.String method)";
@@ -33,7 +35,7 @@ public class ClassUtils {
         String sClass = s.substring(0, s.indexOf("#"));
         String mName = s.substring(s.indexOf("#")+1, s.indexOf("("));
         try {
-            Class<?> aClass = Class.forName(sClass);
+            Class<?> aClass = loader.loadClass(sClass);
             List<Class> mClass = getParams(s).stream().map(ParamBean::getParamClass).collect(Collectors.toList());
             return aClass.getMethod(mName, mClass.toArray(new Class[mClass.size()]));
         } catch (ClassNotFoundException | NoSuchMethodException e) {
@@ -64,7 +66,7 @@ public class ClassUtils {
 
     private static ParamBean toParamBean(String[] s1){
         try {
-            Class<?> aClass = Class.forName(s1[0].trim());
+            Class<?> aClass = loader.loadClass(s1[0].trim());
             return new ParamBean(aClass, s1[1].trim());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
