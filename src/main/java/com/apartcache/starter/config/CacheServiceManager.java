@@ -70,8 +70,11 @@ public class CacheServiceManager {
                             b =  cacheBean.getMethodSet().stream().anyMatch(m->{
                                 return ObjectUtils.nullSafeEquals(m.getName(), method.getName())
                                         && ObjectUtils.nullSafeEquals(
-                                                Arrays.asList(m.getParameterTypes()).stream().map(Class::getName).collect(Collectors.toList()),
-                                        Arrays.asList(method.getParameterTypes()).stream().map(Class::getName).collect(Collectors.toList())
+                                                m.getParameterTypes(),
+                                        method.getParameterTypes()
+//                                        && ObjectUtils.nullSafeEquals(
+//                                                Arrays.asList(m.getParameterTypes()).stream().map(Class::getName).collect(Collectors.toList()),
+//                                        Arrays.asList(method.getParameterTypes()).stream().map(Class::getName).collect(Collectors.toList())
                                 );
                             });
                         }
