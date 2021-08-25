@@ -1,6 +1,8 @@
 package com.apartcache.starter.config;
 
 import com.apartcache.starter.bean.ApartCache;
+import com.apartcache.starter.config.filter.MyFilter;
+import com.apartcache.starter.config.filter.MyListener;
 import com.apartcache.starter.config.interceptor.CacheAdvice;
 import com.apartcache.starter.config.redis.RedisCacheManager;
 import com.apartcache.starter.config.redis.RedisClient;
@@ -22,6 +24,8 @@ import org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -121,12 +125,54 @@ public class CacheConfiguration {
         return new CacheImpl(cacheServiceManager());
     }
 
+    /**
+     * 
+     * servlet注册
+     * @author desk-li 
+     * @date 2021/8/25 16:16 
+     * @return org.springframework.boot.web.servlet.ServletRegistrationBean
+     */
     @Bean
     public ServletRegistrationBean servletRegistrationBean() {
         ServletRegistrationBean registration = new ServletRegistrationBean();
         registration.setServlet(new StatViewServlet(cacheI()));
         registration.addUrlMappings("/manage/*");
         return registration;
+    }
+
+    /**
+     * 
+     * 过滤器注册 
+     * @author desk-li 
+     * @date 2021/8/25 16:16 
+     * @return org.springframework.boot.web.servlet.FilterRegistrationBean
+     */
+    @Bean
+    public FilterRegistrationBean filterRegistrationBean(){
+        FilterRegistrationBean bean = new FilterRegistrationBean();
+        MyFilter filter = new MyFilter();
+        bean.setFilter(filter);
+        bean.setName("myFilter");
+        bean.addUrlPatterns("/*");
+        bean.setOrder(1);
+        return bean;
+    }
+
+
+    /**
+     *
+     * servlet请求监听器
+     * @author desk-li
+     * @date 2021/8/25 16:23
+     * @return org.springframework.boot.web.servlet.ServletListenerRegistrationBean
+     */
+    @Bean
+    public ServletListenerRegistrationBean servletListenerRegistrationBean(){
+        ServletListenerRegistrationBean bean = new ServletListenerRegistrationBean();
+        MyListener listener = new MyListener();
+        bean.setListener(listener);
+        bean.setOrder(1);
+        return bean;
     }
 
 }

@@ -42,7 +42,7 @@ public class CacheImpl implements CacheI {
         if(Optional.ofNullable(method1).isPresent()){
             return serviceManager.getCacheName(method1);
         }
-        return "unknown method: "+method;
+        return null;
     }
 
     @Override
