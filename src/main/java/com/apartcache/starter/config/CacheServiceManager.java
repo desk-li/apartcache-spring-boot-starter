@@ -15,12 +15,13 @@ import java.util.stream.Collectors;
  *
  * @date 2021/8/10
  */
-public class CacheServiceManager {
+public class CacheServiceManager implements ServiceManager{
 
     final Map<String, CacheBean> cacheBeanMap = new ConcurrentHashMap<>();
     ApartCache apartCache;
     CacheNameGenerator cacheNameGenerator;
 
+    @Override
     public void add(Method method) {
         Class<?> declaringClass = method.getDeclaringClass();
         CacheBean cacheBean = cacheBeanMap.get(declaringClass.getName());
@@ -30,7 +31,8 @@ public class CacheServiceManager {
         cacheBeanMap.put(declaringClass.getName(), cacheBean1);
     }
 
-    public void remove(Method method) {
+    @Override
+    public void remove(Long id, Method method) {
         Class<?> declaringClass = method.getDeclaringClass();
         CacheBean cacheBean = cacheBeanMap.get(declaringClass.getName());
         CacheBean cacheBean1 = Optional.ofNullable(cacheBean).orElseGet(() -> new CacheBean());
@@ -38,14 +40,17 @@ public class CacheServiceManager {
         cacheBeanMap.put(declaringClass.getName(), cacheBean1);
     }
 
+    @Override
     public Integer size() {
         return cacheBeanMap.values().stream().map(CacheBean::getMethodSet).mapToInt(Set::size).sum();
     }
 
+    @Override
     public String getCacheName(Method method) {
         return cacheNameGenerator.generate(method);
     }
 
+    @Override
     public String[] getAll() {
         List<Set<Method>> collect = cacheBeanMap.values().stream().map(CacheBean::getMethodSet).collect(Collectors.toList());
         Set<Method> set = new HashSet<>();
@@ -55,7 +60,7 @@ public class CacheServiceManager {
         return set.stream().map(Method::toString).collect(Collectors.toList()).toArray(new String[set.size()]);
     }
 
-
+    @Override
     public boolean contains(Method method){
         boolean b = false;
         Class<?> declaringClass = method.getDeclaringClass();
@@ -72,9 +77,6 @@ public class CacheServiceManager {
                                         && ObjectUtils.nullSafeEquals(
                                                 m.getParameterTypes(),
                                         method.getParameterTypes()
-//                                        && ObjectUtils.nullSafeEquals(
-//                                                Arrays.asList(m.getParameterTypes()).stream().map(Class::getName).collect(Collectors.toList()),
-//                                        Arrays.asList(method.getParameterTypes()).stream().map(Class::getName).collect(Collectors.toList())
                                 );
                             });
                         }

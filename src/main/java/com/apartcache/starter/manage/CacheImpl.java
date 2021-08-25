@@ -1,6 +1,7 @@
 package com.apartcache.starter.manage;
 
 import com.apartcache.starter.config.CacheServiceManager;
+import com.apartcache.starter.config.ServiceManager;
 import com.apartcache.starter.util.ClassUtils;
 
 import java.lang.reflect.Method;
@@ -12,13 +13,13 @@ import java.util.Optional;
  * @date 2021/8/10
  */
 public class CacheImpl implements CacheI {
-    CacheServiceManager cacheServiceManager;
+    ServiceManager serviceManager;
 
     @Override
     public void add(String method) {
         Method method1 = ClassUtils.toMethod(method);
         if(Optional.ofNullable(method1).isPresent()){
-            cacheServiceManager.add(method1);
+            serviceManager.add(method1);
         }
     }
 
@@ -26,30 +27,30 @@ public class CacheImpl implements CacheI {
     public void remove(String method) {
         Method method1 = ClassUtils.toMethod(method);
         if(Optional.ofNullable(method1).isPresent()){
-            cacheServiceManager.remove(method1);
+            serviceManager.remove(null, method1);
         }
     }
 
     @Override
     public Integer size() {
-        return cacheServiceManager.size();
+        return serviceManager.size();
     }
 
     @Override
     public String getCacheName(String method) {
         Method method1 = ClassUtils.toMethod(method);
         if(Optional.ofNullable(method1).isPresent()){
-            return cacheServiceManager.getCacheName(method1);
+            return serviceManager.getCacheName(method1);
         }
         return "unknown method: "+method;
     }
 
     @Override
     public String[] getAll() {
-        return cacheServiceManager.getAll();
+        return serviceManager.getAll();
     }
 
-    public CacheImpl(CacheServiceManager cacheServiceManager) {
-        this.cacheServiceManager = cacheServiceManager;
+    public CacheImpl(ServiceManager serviceManager) {
+        this.serviceManager = serviceManager;
     }
 }

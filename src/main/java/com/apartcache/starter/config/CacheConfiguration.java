@@ -6,24 +6,32 @@ import com.apartcache.starter.config.redis.RedisCacheManager;
 import com.apartcache.starter.config.redis.RedisClient;
 import com.apartcache.starter.manage.CacheI;
 import com.apartcache.starter.manage.CacheImpl;
+import com.apartcache.starter.mapper.CacheDataMapper;
 import com.apartcache.starter.support.http.StatViewServlet;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import org.apache.ibatis.binding.MapperRegistry;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import javax.sql.DataSource;
 
 /**
  * Created by desk
@@ -31,8 +39,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @date 2021/8/9
  */
 @Configuration
-@EnableConfigurationProperties(ApartCache.class)
-@ConditionalOnClass(ApartCache.class)
+@EnableConfigurationProperties({ApartCache.class})
+@ConditionalOnClass({ApartCache.class})
 @ConditionalOnProperty(prefix = "apartcache",name={"apartcache.cacheExpression","apartcache.cachePackage"},matchIfMissing = true)
 public class CacheConfiguration {
 
@@ -40,6 +48,10 @@ public class CacheConfiguration {
     RedisConnectionFactory factory;
     @Autowired
     ApartCache apartCache;
+    @Autowired
+    SqlSession sqlSession;
+    @Autowired
+    SqlSessionFactory sqlSessionFactory;
 
     @Bean
     public CacheNameGenerator cacheNameGenerator(){
@@ -91,12 +103,21 @@ public class CacheConfiguration {
     }
 
     @Bean
-    public CacheServiceManager cacheServiceManager(){
+    public ServiceManager cacheServiceManager(){
         return new CacheServiceManager(apartCache, cacheNameGenerator());
     }
 
     @Bean
+    public ServiceManager dBServiceManager(){
+        sqlSessionFactory.getConfiguration().addMapper(CacheDataMapper.class);
+        return new DBServiceManager(sqlSession.getMapper(CacheDataMapper.class), apartCache, cacheNameGenerator());
+    }
+
+    @Bean
     public CacheI cacheI(){
+        if(dBServiceManager() != null){
+            return new CacheImpl(dBServiceManager());
+        }
         return new CacheImpl(cacheServiceManager());
     }
 
