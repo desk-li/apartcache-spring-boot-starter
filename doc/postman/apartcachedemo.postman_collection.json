@@ -1,0 +1,449 @@
+{
+	"info": {
+		"_postman_id": "8d1c008b-55f1-40db-9ca9-96efcbe34ed3",
+		"name": "apartcachedemo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "cache",
+			"item": [
+				{
+					"name": "servlet",
+					"item": [
+						{
+							"name": "add sayLove",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/manage/add?method=com.example.demo.service.Love%23sayLove()",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"manage",
+										"add"
+									],
+									"query": [
+										{
+											"key": "method",
+											"value": "com.example.demo.service.Love%23sayLove()"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "remove sayLove",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/manage/remove?method=com.example.demo.service.Love%23sayLove()",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"manage",
+										"remove"
+									],
+									"query": [
+										{
+											"key": "method",
+											"value": "com.example.demo.service.Love%23sayLove()"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add saySomething",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/manage/add?method=com.example.demo.service.Love%23saySomething(java.lang.String some)",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"manage",
+										"add"
+									],
+									"query": [
+										{
+											"key": "method",
+											"value": "com.example.demo.service.Love%23saySomething(java.lang.String some)"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "remove saySomething",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/manage/add?method=com.example.demo.service.Love%23sayLove()",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"manage",
+										"add"
+									],
+									"query": [
+										{
+											"key": "method",
+											"value": "com.example.demo.service.Love%23sayLove()"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add sayJokes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/manage/add?method=com.example.demo.service.Love%23sayJokes(java.util.List list)",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"manage",
+										"add"
+									],
+									"query": [
+										{
+											"key": "method",
+											"value": "com.example.demo.service.Love%23sayJokes(java.util.List list)"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "remove sayJokes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/manage/remove?method=com.example.demo.service.Love%23sayJokes(java.util.List list)",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"manage",
+										"remove"
+									],
+									"query": [
+										{
+											"key": "method",
+											"value": "com.example.demo.service.Love%23sayJokes(java.util.List list)"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add passOntransmit",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/manage/add?method=com.example.demo.service.Love%23passOntransmit(com.example.demo.bean.User user, com.example.demo.bean.MessageBean msg)",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"manage",
+										"add"
+									],
+									"query": [
+										{
+											"key": "method",
+											"value": "com.example.demo.service.Love%23passOntransmit(com.example.demo.bean.User user, com.example.demo.bean.MessageBean msg)"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "remove passOntransmit",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/manage/add?method=com.example.demo.service.Love%23passOntransmit(com.example.demo.bean.User user, com.example.demo.bean.MessageBean msg)",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"manage",
+										"add"
+									],
+									"query": [
+										{
+											"key": "method",
+											"value": "com.example.demo.service.Love%23passOntransmit(com.example.demo.bean.User user, com.example.demo.bean.MessageBean msg)"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "size",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/manage/size",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"manage",
+										"size"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "controller",
+					"item": [
+						{
+							"name": "add sayLove",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"method\":\"com.example.demo.service.Love#sayLove()\",\"second\":10}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/cache/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"cache",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "remove sayLove",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/cache/remove/2",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"cache",
+										"remove",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add passOntransmit",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"method\":\"com.example.demo.service.Love#passOntransmit(com.example.demo.bean.User user, com.example.demo.bean.MessageBean msg)\",\"second\":30}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/cache/add",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"cache",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "remove passOntransmit",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/cache/remove/3",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"cache",
+										"remove",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "size",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/cache/size",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"cache",
+										"size"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/manage/all",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"manage",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "love",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/say/love",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"say",
+						"love"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saySomething",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"some\":\"爱你到永远！1122211\"}"
+				},
+				"url": {
+					"raw": "{{host}}/say/saySomething",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"say",
+						"saySomething"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "passOntransmit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"user\":{\"name\":\"desk\",\"age\":28, \"idCard\":\"007\"},\"msg\":{\"title\":\"关于爱情\"}}"
+				},
+				"url": {
+					"raw": "{{host}}/say/passOntransmit",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"say",
+						"passOntransmit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sayJokes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"list\":[{\"name\":\"desk\"},{\"words\":\"love you !\"}]}"
+				},
+				"url": {
+					"raw": "{{host}}/say/sayJokes",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"say",
+						"sayJokes"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
