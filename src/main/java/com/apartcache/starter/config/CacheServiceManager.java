@@ -22,13 +22,18 @@ public class CacheServiceManager implements ServiceManager{
     CacheNameGenerator cacheNameGenerator;
 
     @Override
-    public void add(Method method) {
+    public void add(Method method, Integer second) {
         Class<?> declaringClass = method.getDeclaringClass();
         CacheBean cacheBean = cacheBeanMap.get(declaringClass.getName());
         CacheBean cacheBean1 = Optional.ofNullable(cacheBean).orElseGet(() -> new CacheBean());
         cacheBean1.setClaz(declaringClass);
         cacheBean1.getMethodSet().add(method);
         cacheBeanMap.put(declaringClass.getName(), cacheBean1);
+    }
+
+    @Override
+    public void set(Long id, Integer second) {
+
     }
 
     @Override

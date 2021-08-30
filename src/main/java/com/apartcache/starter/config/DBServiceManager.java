@@ -26,7 +26,7 @@ public class DBServiceManager implements ServiceManager {
     CacheNameGenerator cacheNameGenerator;
 
     @Override
-    public void add(Method method) {
+    public void add(Method method, Integer second) {
         Class<?> declaringClass = method.getDeclaringClass();
         String name = declaringClass.getName();
         String method1 = method.getName();
@@ -39,8 +39,18 @@ public class DBServiceManager implements ServiceManager {
         cacheData.setMethod(method1);
         cacheData.setParams(params);
         cacheData.setStatus(CacheData.LocalStatus.UNACTIVE);
+        cacheData.setSecond(second);
         cacheDataMapper.add(cacheData);
     }
+
+    @Override
+    public void set(Long id, Integer second) {
+        CacheData cacheData = new CacheData();
+        cacheData.setId(id);
+        cacheData.setSecond(second);
+        cacheDataMapper.update(cacheData);
+    }
+
     @Override
     public void remove(Long id, Method method) {
         CacheData cacheData = new CacheData();

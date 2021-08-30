@@ -19,20 +19,24 @@ public interface CacheDataMapper {
 
     @Insert("<script>" +
             "INSERT INTO cache_data(\n" +
+            "        cacheName,\n" +
             "        clazz,\n" +
             "        method,\n" +
             "        params,\n" +
             "        status,\n" +
+            "        second,\n" +
             "        creator,\n" +
             "        createTime,\n" +
             "        updater,\n" +
             "        updateTime\n" +
             "        )\n" +
             "        VALUES(\n" +
+            "        #{cacheName},\n" +
             "        #{clazz},\n" +
             "        #{method},\n" +
             "        #{params},\n" +
             "        #{status},\n" +
+            "        #{second},\n" +
             "        #{creator},\n" +
             "        NOW(),\n" +
             "        #{updater},\n" +
@@ -45,6 +49,9 @@ public interface CacheDataMapper {
             "UPDATE cache_data\n" +
             "        SET\n" +
             "        <trim prefixOverrides=\",\">\n" +
+            "            <if test=\"cacheName != null and cacheName != ''\">\n" +
+            "                cacheName = #{cacheName},\n" +
+            "            </if>\n" +
             "            <if test=\"clazz != null and clazz != ''\">\n" +
             "                clazz = #{clazz},\n" +
             "            </if>\n" +
@@ -56,6 +63,9 @@ public interface CacheDataMapper {
             "            </if>\n" +
             "            <if test=\"status.name() != null and status.name() != ''\">\n" +
             "                status = #{status},\n" +
+            "            </if>\n" +
+            "            <if test=\"second != null and second != ''\">\n" +
+            "                second = #{second},\n" +
             "            </if>\n" +
             "            <if test=\"(clazz != null and clazz != '') or\n" +
             "                    (method != null and method != '') or\n" +

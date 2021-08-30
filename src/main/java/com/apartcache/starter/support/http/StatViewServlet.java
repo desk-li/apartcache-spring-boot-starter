@@ -57,7 +57,7 @@ public class StatViewServlet extends HttpServlet {
 
     private void add(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String method = req.getParameter("method");
-        cacheI.add(method);
+        cacheI.add(method, 0);
         setResponse(resp);
         Writer out = resp.getWriter();
         out.write("success");

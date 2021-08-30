@@ -9,17 +9,15 @@ import com.apartcache.starter.config.redis.RedisClient;
 import com.apartcache.starter.manage.CacheI;
 import com.apartcache.starter.manage.CacheImpl;
 import com.apartcache.starter.mapper.CacheDataMapper;
+import com.apartcache.starter.support.controller.CacheController;
 import com.apartcache.starter.support.http.StatViewServlet;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import org.apache.ibatis.binding.MapperRegistry;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.*;
@@ -34,6 +32,11 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.sql.DataSource;
 
@@ -56,6 +59,8 @@ public class CacheConfiguration {
     SqlSession sqlSession;
     @Autowired
     SqlSessionFactory sqlSessionFactory;
+//    @Autowired
+//    RequestMappingHandlerMapping requestMappingHandlerMapping;
 
     @Bean
     public CacheNameGenerator cacheNameGenerator(){
@@ -174,5 +179,12 @@ public class CacheConfiguration {
         bean.setOrder(1);
         return bean;
     }
+
+    @Bean
+    @ConditionalOnMissingBean(value = {CacheController.class})
+    public CacheController cacheController(){
+        return new CacheController(cacheI());
+    }
+
 
 }

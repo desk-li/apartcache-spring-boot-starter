@@ -1,5 +1,7 @@
 package com.apartcache.starter.bean;
 
+import org.apache.ibatis.annotations.Insert;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,6 +18,7 @@ public class CacheData implements Serializable {
     String method;
     String params;
     LocalStatus status;
+    Integer second;
     String creator;
     Date createTime;
     String updater;
@@ -115,6 +118,14 @@ public class CacheData implements Serializable {
 
     public void setCacheName(String cacheName) {
         this.cacheName = cacheName;
+    }
+
+    public Integer getSecond() {
+        return second;
+    }
+
+    public void setSecond(Integer second) {
+        this.second = second;
     }
 
     public enum LocalStatus{

@@ -9,7 +9,9 @@ import java.lang.reflect.Method;
  * @date 2021/8/23
  */
 public interface ServiceManager {
-    void add(Method method);
+    void add(Method method, Integer second);
+
+    void set(Long id, Integer second);
 
     void remove(Long id, Method method);
 

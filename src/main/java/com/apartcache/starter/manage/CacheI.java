@@ -1,9 +1,5 @@
 package com.apartcache.starter.manage;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by desk
  *
@@ -11,9 +7,11 @@ import java.util.Map;
  */
 public interface CacheI {
 
-    void add(String method);
+    void add(String method, Integer second);
 
     void remove(String method);
+
+    void remove(Long id);
 
     Integer size();
 
